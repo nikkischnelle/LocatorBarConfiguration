@@ -1,0 +1,64 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  build:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: 21
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew build --stacktrace
+          ls build/jar
+      - name: Get plugin version
+        id: get_version
+        run: |
+          pluginVersion=$(grep '^pluginVersion=' gradle.properties)
+          echo "$pluginVersion"
+          echo "$pluginVersion" >> $GITHUB_OUTPUT
+      - name: Check if tag exists locally
+        id: check_tag
+        run: |
+          tag="v${{ steps.get_version.outputs.version }}"
+          echo "Checking if tag '$tag' exists..."
+
+          # Fetch all tags
+          git fetch --tags
+
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Tag $tag exists."
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tag $tag does not exist."
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Upload to release
+        uses: svenstaro/upload-release-action@v2
+        continue-on-error: true
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: "v${{ steps.get_version.outputs.pluginVersion }}"
+          file_glob: true
+          file: build/jar/*.jar
+      - name: Upload to Modrinth
+        if: ${{ success() }}
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |-
+          ./gradlew modrinth

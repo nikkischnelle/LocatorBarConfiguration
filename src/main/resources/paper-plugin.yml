@@ -1,0 +1,8 @@
+name: '${projectName}'
+version: '${version}'
+main: dev.schnelle.locatorBarConfiguration.LocatorBarConfiguration
+bootstrapper: dev.schnelle.locatorBarConfiguration.Bootstrapper
+api-version: '${minecraftVersion}'
+authors: [nikkischnelle]
+description: Let players configure their locator bar in a menu.
+folia-supported: true
