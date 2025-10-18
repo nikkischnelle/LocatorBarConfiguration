@@ -8,22 +8,22 @@ import io.papermc.paper.registry.data.dialog.DialogBase
 import io.papermc.paper.registry.data.dialog.DialogRegistryEntry
 import io.papermc.paper.registry.data.dialog.action.DialogAction
 import io.papermc.paper.registry.data.dialog.type.DialogType
-import java.time.Duration
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickCallback
 import org.bukkit.entity.Player
+import java.time.Duration
 
 @Suppress("UnstableApiUsage")
 class MainMenu : AbstractMenu() {
     override fun build(builder: DialogRegistryEntry.Builder) {
         builder
             .base(
-                DialogBase.builder(Component.text("Locator Bar Configuration"))
+                DialogBase
+                    .builder(Component.text("Locator Bar Configuration"))
                     .pause(false)
                     .afterAction(DialogBase.DialogAfterAction.NONE)
-                    .build()
-            )
-            .type(
+                    .build(),
+            ).type(
                 DialogType.multiAction(
                     listOf(getSubMenuButton(), getInfoMenuButton()),
                     ActionButton.create(
@@ -32,11 +32,14 @@ class MainMenu : AbstractMenu() {
                         200,
                         DialogAction.customClick(
                             { _, audience -> audience.closeDialog() },
-                            ClickCallback.Options.builder().uses(1).build(),
+                            ClickCallback.Options
+                                .builder()
+                                .uses(1)
+                                .build(),
                         ),
                     ),
                     1,
-                )
+                ),
             )
     }
 
@@ -45,7 +48,7 @@ class MainMenu : AbstractMenu() {
             Component.text("Configuration"),
             Component.text(
                 "Configure how you can see others on the " +
-                    "Locator Bar and how others can see you."
+                    "Locator Bar and how others can see you.",
             ),
             200,
             DialogAction.customClick(
@@ -56,7 +59,8 @@ class MainMenu : AbstractMenu() {
                     }
                     MainSubMenu(audience, this).showDialog()
                 },
-                ClickCallback.Options.builder()
+                ClickCallback.Options
+                    .builder()
                     .uses(ClickCallback.UNLIMITED_USES)
                     .lifetime(Duration.ofDays(1024L))
                     .build(),
@@ -78,7 +82,8 @@ class MainMenu : AbstractMenu() {
 
                     InfoMenu(audience, this).showDialog()
                 },
-                ClickCallback.Options.builder()
+                ClickCallback.Options
+                    .builder()
                     .uses(ClickCallback.UNLIMITED_USES)
                     .lifetime(Duration.ofDays(1024L))
                     .build(),
@@ -88,7 +93,5 @@ class MainMenu : AbstractMenu() {
 
     override fun beforeDialog() {}
 
-    override fun getTitle(): String {
-        return "Locator Bar Configuration"
-    }
+    override fun getTitle(): String = "Locator Bar Configuration"
 }

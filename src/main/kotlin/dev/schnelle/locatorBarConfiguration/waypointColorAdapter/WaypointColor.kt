@@ -16,33 +16,29 @@ class WaypointColor {
     companion object {
         @Volatile private var instance: WaypointColorPort? = null
 
-        fun getNamedWaypointColor(player: Player): Result<NamedTextColor?> {
-            return getInstance().getNamedWaypointColor(player)
-        }
+        fun getNamedWaypointColor(player: Player): Result<NamedTextColor?> = getInstance().getNamedWaypointColor(player)
 
-        fun setWaypointColor(player: Player, color: NamedTextColor) {
+        fun setWaypointColor(
+            player: Player,
+            color: NamedTextColor,
+        ) {
             getInstance().setWaypointColor(player, color)
         }
 
-        fun tryInitialize(): Boolean {
-            return try {
+        fun tryInitialize(): Boolean =
+            try {
                 getInstance()
                 true
             } catch (_: IllegalStateException) {
                 false
             }
-        }
 
-        fun getInstance(): WaypointColorPort {
-            return instance ?: synchronized(this) { createInstance().also { instance = it } }
-        }
+        fun getInstance(): WaypointColorPort = instance ?: synchronized(this) { createInstance().also { instance = it } }
 
-        private fun createInstance(): WaypointColorPort {
-            return versionToAdapter
+        private fun createInstance(): WaypointColorPort =
+            versionToAdapter
                 .getOrElse(Bukkit.getServer().minecraftVersion) {
                     throw IllegalStateException("Unsupported Minecraft version")
-                }
-                .call()
-        }
+                }.call()
     }
 }

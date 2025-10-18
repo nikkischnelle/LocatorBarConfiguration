@@ -15,34 +15,30 @@ import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.entity.Player
 
 @Suppress("UnstableApiUsage")
-class MainSubMenu(private val player: Player, parentMenu: AbstractMenu?) :
-    AbstractSubMenu(player, "Menu", parentMenu, 1) {
-    override fun getNavigationButtonContent(): Component {
-        return Component.text("Menu")
-    }
+class MainSubMenu(
+    private val player: Player,
+    parentMenu: AbstractMenu?,
+) : AbstractSubMenu(player, "Menu", parentMenu, 1) {
+    override fun getNavigationButtonContent(): Component = Component.text("Menu")
 
-    override fun getNavigationTooltip(): String {
-        return "Configure your locator bar."
-    }
+    override fun getNavigationTooltip(): String = "Configure your locator bar."
 
     override fun beforeDialog() {}
 
-    override fun getBody(): List<DialogBody> {
-        return bodyFromString(
+    override fun getBody(): List<DialogBody> =
+        bodyFromString(
             "The locator bar shows the position of other players.",
             "You can configure the range at which other players can see you on" +
                 "their locator bar, as well as how far you can see other players on yours, using this menu.",
         )
-    }
 
-    override fun getActionButtons(): List<ActionButton> {
-        return listOf(
+    override fun getActionButtons(): List<ActionButton> =
+        listOf(
             getToggleButton(),
             ReceiveRangeMenu(player, this).getNavigationButton(),
             TransmitRangeMenu(player, this).getNavigationButton(),
             ColorSubMenu(player, this).getNavigationButton(),
         )
-    }
 
     private fun getToggleButton(): ActionButton {
         val barEnabled = AttributeAdapter.isLocatorBarEnabled(player)
@@ -58,7 +54,7 @@ class MainSubMenu(private val player: Player, parentMenu: AbstractMenu?) :
             Component.text("Locator Bar: ").append(enabledComponent),
             Component.text(
                 "Disables the entire locator bar. If disabled, you do not show up on " +
-                    "other players' locator bars and you cannot see your own."
+                    "other players' locator bars and you cannot see your own.",
             ),
             200,
             DialogAction.customClick(
@@ -70,7 +66,10 @@ class MainSubMenu(private val player: Player, parentMenu: AbstractMenu?) :
                     }
                     showDialog()
                 },
-                ClickCallback.Options.builder().uses(1).build(),
+                ClickCallback.Options
+                    .builder()
+                    .uses(1)
+                    .build(),
             ),
         )
     }

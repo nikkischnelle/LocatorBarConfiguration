@@ -24,7 +24,8 @@ class LBO {
 
         fun isEnabled(): Boolean {
             Bukkit.getDatapackManager().refreshPacks()
-            return !Bukkit.getDatapackManager()
+            return !Bukkit
+                .getDatapackManager()
                 .enabledPacks
                 .mapNotNull { it.description as? TextComponent }
                 .none { it.content().startsWith("RedSyven's Locator Bar Options") }
@@ -34,7 +35,10 @@ class LBO {
             Bukkit.getPluginManager().registerEvents(PlayerListener(plugin), plugin)
         }
 
-        fun migratePlayer(plugin: Plugin, player: Player) {
+        fun migratePlayer(
+            plugin: Plugin,
+            player: Player,
+        ) {
             val attributes =
                 listOf(Attribute.WAYPOINT_TRANSMIT_RANGE, Attribute.WAYPOINT_RECEIVE_RANGE)
 
@@ -44,7 +48,7 @@ class LBO {
                     instance.baseValue != MAX_RANGE || !AttributeAdapter.isLocatorBarEnabled(player)
                 ) {
                     plugin.logger.fine(
-                        "Player ${player.name} has already customized their range with the plugin."
+                        "Player ${player.name} has already customized their range with the plugin.",
                     )
                     return
                 }
@@ -85,13 +89,15 @@ class LBO {
             player.sendMessage(
                 Component.text(
                     "Hi there! Your locator bar options have just " +
-                        "been migrated to a new plugin. Please make sure they're set correctly."
-                )
+                        "been migrated to a new plugin. Please make sure they're set correctly.",
+                ),
             )
         }
     }
 
-    class PlayerListener(private val plugin: Plugin) : Listener {
+    class PlayerListener(
+        private val plugin: Plugin,
+    ) : Listener {
         @EventHandler
         fun onJoin(event: PlayerJoinEvent) {
             Scheduler(plugin).runAsyncTask("Error during LBO listener. Probably the migration.") {
@@ -103,9 +109,10 @@ class LBO {
                     }
 
                     player.sendMessage(
-                        Component.text("Incompatibility Alert: ", NamedTextColor.RED)
+                        Component
+                            .text("Incompatibility Alert: ", NamedTextColor.RED)
                             .appendNewline()
-                            .append(Component.text(INCOMPATABILITY_MESSAGE))
+                            .append(Component.text(INCOMPATABILITY_MESSAGE)),
                     )
                     return@runAsyncTask
                 }

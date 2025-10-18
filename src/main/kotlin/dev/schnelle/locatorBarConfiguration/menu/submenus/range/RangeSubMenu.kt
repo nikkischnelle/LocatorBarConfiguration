@@ -20,23 +20,19 @@ private val attributeToName =
         Attribute.WAYPOINT_RECEIVE_RANGE.key().value() to "Receive",
     )
 
-private fun getAttributeName(attribute: Attribute): String {
-    return attributeToName[attribute.key().value()] ?: attribute.key().value()
-}
+private fun getAttributeName(attribute: Attribute): String = attributeToName[attribute.key().value()] ?: attribute.key().value()
 
-private fun rangeToStringK(value: Double): String {
-    return when {
+private fun rangeToStringK(value: Double): String =
+    when {
         value == MAX_RANGE -> "Infinite"
         value >= 1_000_000 -> String.format("%.1fm", value / 1_000_000)
         value >= 1_000 -> String.format("%.1fk", value / 1_000)
         else -> value.toString()
     }
-}
 
-private fun getRanges(): Map<Double, String> {
-    return listOf(0.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0, 1000.0, 10000.0, 100000.0, MAX_RANGE)
+private fun getRanges(): Map<Double, String> =
+    listOf(0.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0, 1000.0, 10000.0, 100000.0, MAX_RANGE)
         .associateWith { rangeToStringK(it) }
-}
 
 @Suppress("UnstableApiUsage")
 abstract class RangeSubMenu(
@@ -53,12 +49,10 @@ abstract class RangeSubMenu(
         currentRangeRep = rangeToStringK(currentRange)
     }
 
-    override fun getBody(): List<DialogBody> {
-        return bodyFromString(*getDescriptionText())
-    }
+    override fun getBody(): List<DialogBody> = bodyFromString(*getDescriptionText())
 
-    override fun getActionButtons(): List<ActionButton> {
-        return getRanges().map { (range, rep) ->
+    override fun getActionButtons(): List<ActionButton> =
+        getRanges().map { (range, rep) ->
             val color =
                 when {
                     currentRange == range -> NamedTextColor.GREEN
@@ -72,31 +66,28 @@ abstract class RangeSubMenu(
                 callback(range),
             )
         }
-    }
 
-    private fun callback(range: Double): DialogAction.CustomClickAction {
-        return DialogAction.customClick(
+    private fun callback(range: Double): DialogAction.CustomClickAction =
+        DialogAction.customClick(
             { _, audience ->
                 if (audience is Player) {
                     setAttributeBaseValue(player, attribute, range)
                 }
                 showDialog()
             },
-            ClickCallback.Options.builder()
+            ClickCallback.Options
+                .builder()
                 .uses(ClickCallback.UNLIMITED_USES)
                 .lifetime(ClickCallback.DEFAULT_LIFETIME)
                 .build(),
         )
-    }
 
-    override fun getNavigationButtonContent(): Component {
-        return Component.text("$attributeName Range: ")
+    override fun getNavigationButtonContent(): Component =
+        Component
+            .text("$attributeName Range: ")
             .append(Component.text("$currentRangeRep blocks").color(NamedTextColor.LIGHT_PURPLE))
-    }
 
-    override fun getNavigationTooltip(): String {
-        return getDescriptionText().first()
-    }
+    override fun getNavigationTooltip(): String = getDescriptionText().first()
 
     protected abstract fun getButtonToolTip(rangeRepresentation: String): String
 

@@ -7,10 +7,10 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import io.papermc.paper.registry.RegistryKey
 import io.papermc.paper.registry.TypedKey
 import io.papermc.paper.registry.event.RegistryEvents
+import net.kyori.adventure.key.Key
 import java.io.IOException
 import java.net.URI
 import java.net.URISyntaxException
-import net.kyori.adventure.key.Key
 
 @Suppress("UnstableApiUsage", "Unused")
 class Bootstrapper : PluginBootstrap {
@@ -20,12 +20,12 @@ class Bootstrapper : PluginBootstrap {
         context.lifecycleManager.registerEventHandler(
             RegistryEvents.DIALOG.compose().newHandler { event ->
                 event.registry().register(
-                    TypedKey.create(RegistryKey.DIALOG, Key.key("lbc:menu"))
+                    TypedKey.create(RegistryKey.DIALOG, Key.key("lbc:menu")),
                 ) { builder ->
                     //                    MenuDialogBuilder.build(builder)
                     MainMenu().build(builder)
                 }
-            }
+            },
         )
 
         context.lifecycleManager.registerEventHandler(
@@ -38,7 +38,7 @@ class Bootstrapper : PluginBootstrap {
                 } catch (e: IOException) {
                     throw RuntimeException(e)
                 }
-            }
+            },
         )
     }
 }

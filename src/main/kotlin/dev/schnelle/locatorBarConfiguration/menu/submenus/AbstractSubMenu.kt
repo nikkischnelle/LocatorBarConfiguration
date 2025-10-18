@@ -12,7 +12,7 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.entity.Player
 
-const val backButtonSize: Int = 200
+const val BACK_BUTTON_SIZE: Int = 200
 
 @Suppress("UnstableApiUsage")
 abstract class AbstractSubMenu(
@@ -25,34 +25,31 @@ abstract class AbstractSubMenu(
         showDialog(player)
     }
 
-    override fun getTitle(): String {
-        return "${parentMenu?.getTitle()} > $subTitle"
-    }
+    override fun getTitle(): String = "${parentMenu?.getTitle()} > $subTitle"
 
     override fun build(builder: DialogRegistryEntry.Builder) {
         builder
             .base(
-                DialogBase.builder(Component.text(getTitle()).decorate(TextDecoration.BOLD))
+                DialogBase
+                    .builder(Component.text(getTitle()).decorate(TextDecoration.BOLD))
                     .pause(false)
                     .afterAction(DialogBase.DialogAfterAction.NONE)
                     .body(getBody())
-                    .build()
-            )
-            .type(DialogType.multiAction(getActionButtons(), getExitActionButton(), columns))
+                    .build(),
+            ).type(DialogType.multiAction(getActionButtons(), getExitActionButton(), columns))
     }
 
     protected abstract fun getBody(): List<DialogBody>
 
     protected abstract fun getActionButtons(): List<ActionButton>
 
-    private fun getExitActionButton(): ActionButton {
-        return ActionButton.create(
+    private fun getExitActionButton(): ActionButton =
+        ActionButton.create(
             Component.text("Done"),
             null,
-            backButtonSize,
+            BACK_BUTTON_SIZE,
             DialogAction.staticAction(ClickEvent.callback { _ -> parentMenu?.showDialog(player) }),
         )
-    }
 
     fun getNavigationButton(): ActionButton {
         beforeDialog()
@@ -62,7 +59,10 @@ abstract class AbstractSubMenu(
             300,
             DialogAction.customClick(
                 { _, _ -> showDialog() },
-                ClickCallback.Options.builder().uses(1).build(),
+                ClickCallback.Options
+                    .builder()
+                    .uses(1)
+                    .build(),
             ),
         )
     }

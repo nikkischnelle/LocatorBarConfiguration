@@ -1,10 +1,12 @@
 package dev.schnelle.locatorBarConfiguration
 
-import java.util.logging.Level
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
+import java.util.logging.Level
 
-class Scheduler(private val plugin: Plugin) {
+class Scheduler(
+    private val plugin: Plugin,
+) {
     val isFolia: Boolean =
         try {
             Class.forName("io.papermc.paper.threadedregions.RegionizedServer")
@@ -13,7 +15,10 @@ class Scheduler(private val plugin: Plugin) {
             false
         }
 
-    fun runAsyncTask(messageForErrors: String, runnable: () -> Unit) {
+    fun runAsyncTask(
+        messageForErrors: String,
+        runnable: () -> Unit,
+    ) {
         val safeRunnable = {
             try {
                 runnable()

@@ -6,21 +6,20 @@ import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.inventory.ItemStack
 
 @Suppress("UnstableApiUsage")
-fun bodyFromString(vararg texts: String): MutableList<DialogBody> {
-    return texts.map { DialogBody.plainMessage(Component.text(it)) }.toMutableList()
-}
+fun bodyFromString(vararg texts: String): MutableList<DialogBody> =
+    texts.map { DialogBody.plainMessage(Component.text(it)) }.toMutableList()
 
 @Suppress("UnstableApiUsage")
-fun createdByMessage(skullItem: ItemStack): List<DialogBody> {
-    return listOf(
+fun createdByMessage(skullItem: ItemStack): List<DialogBody> =
+    listOf(
         DialogBody.plainMessage(
-            Component.text("Created by")
+            Component
+                .text("Created by")
                 .appendNewline()
-                .append(Component.text("nikkischnelle").color(NamedTextColor.DARK_PURPLE))
+                .append(Component.text("nikkischnelle").color(NamedTextColor.DARK_PURPLE)),
         ),
         DialogBody.item(skullItem).showTooltip(false).build(),
     )
-}
 
 private val colorTranslations =
     mapOf(
@@ -42,10 +41,6 @@ private val colorTranslations =
         "dark_gray" to "Dark Gray",
     )
 
-fun getColorNameComponent(color: String): Component {
-    return Component.text(getColorName(color))
-}
+fun getColorNameComponent(color: String): Component = Component.text(getColorName(color))
 
-fun getColorName(color: String): String {
-    return colorTranslations[color] ?: color
-}
+fun getColorName(color: String): String = colorTranslations[color] ?: color

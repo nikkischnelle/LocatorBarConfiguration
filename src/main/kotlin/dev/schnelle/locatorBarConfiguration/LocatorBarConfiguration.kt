@@ -22,7 +22,7 @@ class LocatorBarConfiguration : JavaPlugin() {
         if (!tryInitialize()) {
             logger.severe(
                 "Unsupported minecraft version found. Please ensure that the plugin is compatible with" +
-                    "the current minecraft version. LocatorBarConfiguration will not work properly."
+                    "the current minecraft version. LocatorBarConfiguration will not work properly.",
             )
             disableDatapack()
             return

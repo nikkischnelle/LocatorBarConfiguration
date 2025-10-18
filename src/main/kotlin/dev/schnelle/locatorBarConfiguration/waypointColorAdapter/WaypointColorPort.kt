@@ -6,5 +6,8 @@ import org.bukkit.entity.Player
 interface WaypointColorPort {
     fun getNamedWaypointColor(player: Player): Result<NamedTextColor?>
 
-    fun setWaypointColor(player: Player, color: NamedTextColor)
+    fun setWaypointColor(
+        player: Player,
+        color: NamedTextColor,
+    )
 }

@@ -16,28 +16,30 @@ class AttributeAdapter {
                 AttributeModifier.Operation.MULTIPLY_SCALAR_1,
             )
 
-        fun setAttributeBaseValue(player: Player, attribute: Attribute, value: Double) {
+        fun setAttributeBaseValue(
+            player: Player,
+            attribute: Attribute,
+            value: Double,
+        ) {
             player.getAttribute(attribute)!!.baseValue = value
         }
 
-        fun getAttributeBaseValue(player: Player, attribute: Attribute): Double? {
-            return player.getAttribute(attribute)?.baseValue
-        }
+        fun getAttributeBaseValue(
+            player: Player,
+            attribute: Attribute,
+        ): Double? = player.getAttribute(attribute)?.baseValue
 
-        fun getAttributeValue(player: Player, attribute: Attribute): Double? {
-            return player.getAttribute(attribute)?.value
-        }
+        fun getAttributeValue(
+            player: Player,
+            attribute: Attribute,
+        ): Double? = player.getAttribute(attribute)?.value
 
-        fun isLocatorBarEnabled(player: Player): Boolean {
-            return getTransmitAttribute(player).getModifier(disableModifierKey) == null
-        }
+        fun isLocatorBarEnabled(player: Player): Boolean = getTransmitAttribute(player).getModifier(disableModifierKey) == null
 
         fun hasAttributeModifier(
             attributeInstance: AttributeInstance,
             key: NamespacedKey,
-        ): Boolean {
-            return attributeInstance.getModifier(key) != null
-        }
+        ): Boolean = attributeInstance.getModifier(key) != null
 
         fun disableLocatorBar(player: Player) {
             getReceiveAttribute(player).addModifier(disableModifier)
@@ -49,16 +51,15 @@ class AttributeAdapter {
             removeModifier(getTransmitAttribute(player), disableModifierKey)
         }
 
-        fun removeModifier(attributeInstance: AttributeInstance, modifierKey: NamespacedKey) {
+        fun removeModifier(
+            attributeInstance: AttributeInstance,
+            modifierKey: NamespacedKey,
+        ) {
             attributeInstance.removeModifier(modifierKey)
         }
 
-        private fun getReceiveAttribute(player: Player): AttributeInstance {
-            return player.getAttribute(Attribute.WAYPOINT_RECEIVE_RANGE)!!
-        }
+        private fun getReceiveAttribute(player: Player): AttributeInstance = player.getAttribute(Attribute.WAYPOINT_RECEIVE_RANGE)!!
 
-        private fun getTransmitAttribute(player: Player): AttributeInstance {
-            return player.getAttribute(Attribute.WAYPOINT_TRANSMIT_RANGE)!!
-        }
+        private fun getTransmitAttribute(player: Player): AttributeInstance = player.getAttribute(Attribute.WAYPOINT_TRANSMIT_RANGE)!!
     }
 }
