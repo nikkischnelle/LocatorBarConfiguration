@@ -1,12 +1,10 @@
 package dev.schnelle.locatorBarConfiguration
 
-import dev.schnelle.locatorBarConfiguration.LBO.Companion.registerIncompatibilityAlert
 import dev.schnelle.locatorBarConfiguration.waypointColorAdapter.WaypointColor.Companion.tryInitialize
 import io.papermc.paper.datapack.Datapack
 import org.bukkit.plugin.java.JavaPlugin
 
 class LocatorBarConfiguration : JavaPlugin() {
-
     private var datapack: Datapack? = null
 
     override fun onLoad() {
@@ -30,7 +28,7 @@ class LocatorBarConfiguration : JavaPlugin() {
             return
         }
 
-        registerIncompatibilityAlert(this)
+        LBO.registerPlayerListener(this)
         if (LBO.isEnabled()) {
             logger.warning(LBO.INCOMPATABILITY_MESSAGE)
         }
