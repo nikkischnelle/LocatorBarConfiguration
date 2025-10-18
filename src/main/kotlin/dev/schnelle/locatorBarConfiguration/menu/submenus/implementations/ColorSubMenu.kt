@@ -1,10 +1,10 @@
-package dev.schnelle.locatorBarConfiguration.submenus.implementations
+package dev.schnelle.locatorBarConfiguration.menu.submenus.implementations
 
-import dev.schnelle.locatorBarConfiguration.bodyFromString
-import dev.schnelle.locatorBarConfiguration.getColorName
-import dev.schnelle.locatorBarConfiguration.getColorNameComponent
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractMenu
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractSubMenu
+import dev.schnelle.locatorBarConfiguration.menu.bodyFromString
+import dev.schnelle.locatorBarConfiguration.menu.getColorName
+import dev.schnelle.locatorBarConfiguration.menu.getColorNameComponent
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractSubMenu
 import dev.schnelle.locatorBarConfiguration.waypointColorAdapter.WaypointColor
 import io.papermc.paper.registry.data.dialog.ActionButton
 import io.papermc.paper.registry.data.dialog.action.DialogAction

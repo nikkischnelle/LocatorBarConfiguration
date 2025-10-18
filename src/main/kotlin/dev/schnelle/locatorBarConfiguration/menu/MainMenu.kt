@@ -1,8 +1,8 @@
-package dev.schnelle.locatorBarConfiguration
+package dev.schnelle.locatorBarConfiguration.menu
 
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractMenu
-import dev.schnelle.locatorBarConfiguration.submenus.implementations.InfoMenu
-import dev.schnelle.locatorBarConfiguration.submenus.implementations.MainSubMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.implementations.InfoMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.implementations.MainSubMenu
 import io.papermc.paper.registry.data.dialog.ActionButton
 import io.papermc.paper.registry.data.dialog.DialogBase
 import io.papermc.paper.registry.data.dialog.DialogRegistryEntry

@@ -1,10 +1,10 @@
-package dev.schnelle.locatorBarConfiguration.submenus.implementations
+package dev.schnelle.locatorBarConfiguration.menu.submenus.implementations
 
 import com.destroystokyo.paper.profile.ProfileProperty
-import dev.schnelle.locatorBarConfiguration.bodyFromString
-import dev.schnelle.locatorBarConfiguration.createdByMessage
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractMenu
-import dev.schnelle.locatorBarConfiguration.submenus.backButtonSize
+import dev.schnelle.locatorBarConfiguration.menu.bodyFromString
+import dev.schnelle.locatorBarConfiguration.menu.createdByMessage
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.backButtonSize
 import io.papermc.paper.registry.data.dialog.ActionButton
 import io.papermc.paper.registry.data.dialog.DialogBase
 import io.papermc.paper.registry.data.dialog.DialogRegistryEntry

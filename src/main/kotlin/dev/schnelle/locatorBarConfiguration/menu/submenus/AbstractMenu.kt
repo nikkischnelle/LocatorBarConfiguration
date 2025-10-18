@@ -1,4 +1,4 @@
-package dev.schnelle.locatorBarConfiguration.submenus
+package dev.schnelle.locatorBarConfiguration.menu.submenus
 
 import io.papermc.paper.dialog.Dialog
 import io.papermc.paper.registry.data.dialog.DialogRegistryEntry

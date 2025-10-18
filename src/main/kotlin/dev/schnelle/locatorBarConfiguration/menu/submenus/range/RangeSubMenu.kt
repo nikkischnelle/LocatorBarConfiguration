@@ -1,11 +1,10 @@
-package dev.schnelle.locatorBarConfiguration.submenus.range
+package dev.schnelle.locatorBarConfiguration.menu.submenus.range
 
 import dev.schnelle.locatorBarConfiguration.AttributeAdapter.Companion.getAttributeBaseValue
 import dev.schnelle.locatorBarConfiguration.AttributeAdapter.Companion.setAttributeBaseValue
-import dev.schnelle.locatorBarConfiguration.MAX_RANGE
-import dev.schnelle.locatorBarConfiguration.bodyFromString
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractMenu
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractSubMenu
+import dev.schnelle.locatorBarConfiguration.menu.bodyFromString
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractSubMenu
 import io.papermc.paper.registry.data.dialog.ActionButton
 import io.papermc.paper.registry.data.dialog.action.DialogAction
 import io.papermc.paper.registry.data.dialog.body.DialogBody

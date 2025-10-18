@@ -1,11 +1,11 @@
-package dev.schnelle.locatorBarConfiguration.submenus.implementations
+package dev.schnelle.locatorBarConfiguration.menu.submenus.implementations
 
 import dev.schnelle.locatorBarConfiguration.AttributeAdapter
-import dev.schnelle.locatorBarConfiguration.bodyFromString
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractMenu
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractSubMenu
-import dev.schnelle.locatorBarConfiguration.submenus.range.ReceiveRangeMenu
-import dev.schnelle.locatorBarConfiguration.submenus.range.TransmitRangeMenu
+import dev.schnelle.locatorBarConfiguration.menu.bodyFromString
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractSubMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.range.ReceiveRangeMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.range.TransmitRangeMenu
 import io.papermc.paper.registry.data.dialog.ActionButton
 import io.papermc.paper.registry.data.dialog.action.DialogAction
 import io.papermc.paper.registry.data.dialog.body.DialogBody

@@ -1,6 +1,6 @@
-package dev.schnelle.locatorBarConfiguration.submenus.range
+package dev.schnelle.locatorBarConfiguration.menu.submenus.range
 
-import dev.schnelle.locatorBarConfiguration.submenus.AbstractMenu
+import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 

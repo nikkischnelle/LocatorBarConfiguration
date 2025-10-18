@@ -1,5 +1,6 @@
 package dev.schnelle.locatorBarConfiguration
 
+import dev.schnelle.locatorBarConfiguration.menu.MainMenu
 import io.papermc.paper.plugin.bootstrap.BootstrapContext
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
