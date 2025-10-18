@@ -12,7 +12,7 @@ You can access the menu from the pause screen (either through `Locator Bar Confi
 
 ## Disclaimer
 This plugin is more a proof-of-concept than actual plugin. It uses Paper's **experimental** [Dialog API](https://docs.papermc.io/paper/dev/dialogs/) and should therefore also be seen as experimental.
-Since paper-api doesn't have support for getting and setting a player's waypoint colour [yet](https://github.com/PaperMC/Paper/issues/12961), this is also the first time i had to work with NMS.
+Since paper-api doesn't have support for getting and setting a player's waypoint colour [yet](https://github.com/PaperMC/Paper/issues/12961), this is also the first time I had to work with NMS.
 
 tl;dr: The code isn't pretty and the APIs it uses are experimental, but it seems to work.
 
@@ -27,7 +27,7 @@ Each player can
 
 ## Why?
 While RedSyven's datapack worked fine for our purposes, some players ran into undiagnosable issues with their options not being updated.  
-Since the server i used the datapack on might switch to Folia soon and datapacks aren't enabled in Folia, I wanted to see
+Since the server I used the datapack on might switch to Folia soon and datapacks aren't enabled in Folia, I wanted to see
 what Paper's **experimental** support for the Dialog API can do.
 
 ## How does it work?
