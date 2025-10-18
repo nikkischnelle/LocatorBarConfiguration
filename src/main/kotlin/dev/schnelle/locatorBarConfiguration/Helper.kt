@@ -25,6 +25,8 @@ private val colorTranslations =
         "dark_gray" to "Dark Gray",
     )
 
+const val MAX_RANGE = 6.0E7
+
 @Suppress("UnstableApiUsage")
 fun bodyFromString(vararg texts: String): MutableList<DialogBody> {
     return texts.map { DialogBody.plainMessage(Component.text(it)) }.toMutableList()
