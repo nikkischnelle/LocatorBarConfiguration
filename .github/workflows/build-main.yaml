@@ -35,7 +35,7 @@ jobs:
       - name: Check if tag exists locally
         id: check_tag
         run: |
-          tag="v${{ steps.get_version.outputs.version }}"
+          tag="v${{ steps.get_version.outputs.pluginVersion }}"
           echo "Checking if tag '$tag' exists..."
 
           # Fetch all tags
@@ -49,6 +49,7 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
       - name: Upload to release
+        if: steps.check_tag.outputs.exists == 'false'
         uses: svenstaro/upload-release-action@v2
         continue-on-error: true
         with:
@@ -57,7 +58,7 @@ jobs:
           file_glob: true
           file: build/jar/*.jar
       - name: Upload to Modrinth
-        if: ${{ success() }}
+        if: steps.check_tag.outputs.exists == 'false'
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: |-
