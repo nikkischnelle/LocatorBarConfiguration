@@ -16,6 +16,9 @@ Since paper-api doesn't have support for getting and setting a player's waypoint
 
 tl;dr: The code isn't pretty and the APIs it uses are experimental, but it seems to work.
 
+### Folia
+**Folia doesn't support waypoints yet**. I marked this compatible as it should be fully compatible once Folia supports waypoints/the locator bar.
+
 ## Features
 Each player can
 - toggle their locator bar on and off 
