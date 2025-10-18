@@ -4,6 +4,7 @@ plugins {
     id("xyz.jpenilla.run-paper")
     id("com.modrinth.minotaur")
     id("io.papermc.paperweight.userdev")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 val targetJavaVersion = 21
@@ -55,7 +56,10 @@ tasks {
         archiveFileName.set("$projectName-$pluginVersion.jar")
     }
 
-    build { dependsOn("shadowJar") }
+    build {
+        dependsOn("shadowJar")
+        dependsOn("ktlintCheck")
+    }
 
     processResources {
         val props =
