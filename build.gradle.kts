@@ -85,7 +85,7 @@ tasks {
 modrinth {
     token.set(System.getenv("MODRINTH_TOKEN"))
     projectId.set("locatorbarconfiguration")
-    versionNumber.set("$minecraftVersion-$pluginVersion")
+    versionNumber.set(pluginVersion)
     versionType.set("release")
     uploadFile.set(tasks.shadowJar)
     gameVersions.addAll(supportedMinecraftVersions)
