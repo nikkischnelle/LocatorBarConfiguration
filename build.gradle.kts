@@ -1,7 +1,3 @@
-import xyz.jpenilla.runpaper.task.RunServer
-import xyz.jpenilla.runtask.pluginsapi.PluginDownloadService
-import xyz.jpenilla.runtask.service.DownloadsAPIService
-
 plugins {
     kotlin("jvm")
     id("com.gradleup.shadow")
@@ -38,24 +34,16 @@ dependencies {
     implementation(kotlin("reflect"))
 }
 
+runPaper.folia.registerTask {
+    minecraftVersion(minecraftVersion)
+    runDirectory(file("run/folia"))
+}
+
 tasks {
-    runServer { enabled = false }
-
-    register<RunServer>("runPaper") {
-        group = "run paper"
-        runDirectory.set(layout.projectDirectory.dir("run/paper"))
-        downloadsApiService.convention(DownloadsAPIService.paper(project))
-        pluginDownloadService.convention(PluginDownloadService.paper(project))
+    runServer {
+        minecraftVersion(minecraftVersion)
+        runDirectory(file("run/paper"))
     }
-
-    register<RunServer>("runFolia") {
-        group = "run paper"
-        runDirectory.set(layout.projectDirectory.dir("run/folia"))
-        downloadsApiService.convention(DownloadsAPIService.folia(project))
-        pluginDownloadService.convention(PluginDownloadService.paper(project))
-    }
-
-    withType(RunServer::class).configureEach { version.set(minecraftVersion) }
 
     jar {
         destinationDirectory.set(file("${layout.buildDirectory.get()}/libs/leanJar/"))
