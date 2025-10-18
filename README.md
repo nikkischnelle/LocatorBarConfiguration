@@ -8,7 +8,7 @@ Inspired by RedSyven's Datapack [Locator Bar Options](https://modrinth.com/datap
 
 You can access the menu from the pause screen (either through `Locator Bar Configuration` or `Custom Options` and then `Locator Bar Configuration`)
 
-![usage-gif](https://github.com/user-attachments/assets/186fb8cc-17df-4cf6-895e-4b3ab5403051)
+![usage-gif](https://github.com/user-attachments/assets/bab95a8b-f6df-4554-85b0-d56b880546f1)
 
 ## Disclaimer
 This plugin is more a proof-of-concept than actual plugin. It uses Paper's **experimental** [Dialog API](https://docs.papermc.io/paper/dev/dialogs/) and should therefore also be seen as experimental.
