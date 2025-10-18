@@ -12,7 +12,6 @@ import io.papermc.paper.registry.data.dialog.body.DialogBody
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickCallback
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 
@@ -80,12 +79,7 @@ abstract class RangeSubMenu(
         return DialogAction.customClick(
             { _, audience ->
                 if (audience is Player) {
-                    val attributeName = attributeName.lowercase()
                     setAttributeBaseValue(player, attribute, range)
-                    audience.sendRichMessage(
-                        "You selected a $attributeName range of <color:#ccfffd><range> blocks</color>!",
-                        Placeholder.component("range", Component.text(range)),
-                    )
                 }
                 showDialog()
             },
