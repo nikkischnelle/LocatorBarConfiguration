@@ -54,8 +54,10 @@ class LBO {
                     return
                 }
             }
-            plugin.logger.fine("Migrating LBO to LBC for player ${player.name}")
 
+            plugin.logger.finer("Trying to migrate LBO to LBC for player ${player.name}")
+
+            var migratedData = false
             var disableBar = false
 
             for (attribute in attributes) {
@@ -69,6 +71,7 @@ class LBO {
                     // Remove off to get values before disabling
                     AttributeAdapter.removeModifier(instance, lboKeyOff)
                     disableBar = true
+                    migratedData = true
                 }
 
                 if (hasNormalize && hasCustomize) {
@@ -77,14 +80,20 @@ class LBO {
                 }
                 if (hasNormalize) {
                     AttributeAdapter.removeModifier(instance, lboKeyNormalize)
+                    migratedData = true
                 }
                 if (hasCustomize) {
                     AttributeAdapter.removeModifier(instance, lboKeyCustomize)
+                    migratedData = true
                 }
             }
 
             if (disableBar) {
                 AttributeAdapter.disableLocatorBar(player)
+            }
+
+            if (!migratedData) {
+                return
             }
 
             val migrationMessageString = Config.getInstance().getLBOMigrationUserNotification()
