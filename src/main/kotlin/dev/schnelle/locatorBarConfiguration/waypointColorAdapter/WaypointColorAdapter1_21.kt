@@ -9,20 +9,20 @@ import kotlin.jvm.optionals.getOrNull
 
 @Suppress("ClassName")
 class WaypointColorAdapter1_21 : WaypointColorPort {
-    override fun getNamedWaypointColor(player: Player): Result<NamedTextColor?> =
+    override fun getWaypointColor(player: Player): Result<TextColor?> =
         runCatching {
             val icon = (player as CraftPlayer).handle.waypointIcon()
             val color = icon.color.getOrNull()
             if (color == null) {
                 null
             } else {
-                NamedTextColor.nearestTo(TextColor.color(color))
+                TextColor.color(color)
             }
         }
 
     override fun setWaypointColor(
         player: Player,
-        color: NamedTextColor,
+        color: TextColor,
     ) {
         runCatching {
             val icon = (player as CraftPlayer).handle.waypointIcon()

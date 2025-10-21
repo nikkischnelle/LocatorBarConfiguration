@@ -12,7 +12,7 @@ import io.papermc.paper.registry.data.dialog.action.DialogAction
 import io.papermc.paper.registry.data.dialog.body.DialogBody
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.entity.Player
 
 @Suppress("UnstableApiUsage")
@@ -20,11 +20,10 @@ class ColorSubMenu(
     private val player: Player,
     parentMenu: AbstractMenu?,
 ) : AbstractSubMenu(player, "Color", parentMenu) {
-    private var currentColor: NamedTextColor? = null
-    private var currentColorName: String = "None"
+    private var currentColor: TextColor? = null
 
     private fun currentColorText(): Component {
-        val currentColorTranslated = getColorName(currentColorName)
+        val currentColorTranslated = currentColor?.let { getColorName(it) } ?: "Unknown/Not set"
         return Component
             .text("Icon Color: ")
             .append(Component.text("⬤ $currentColorTranslated ⬤").color(currentColor))
@@ -36,7 +35,6 @@ class ColorSubMenu(
 
     override fun beforeDialog() {
         currentColor = WaypointColor.getNamedWaypointColor(player).getOrNull()
-        currentColorName = currentColor?.let { NamedTextColor.NAMES.key(it) } ?: "None"
     }
 
     override fun getBody(): List<DialogBody> =
@@ -47,14 +45,14 @@ class ColorSubMenu(
     override fun getActionButtons(): List<ActionButton> =
         Config.getInstance().getColors().map { color ->
             ActionButton.create(
-                getColorNameComponent(color.name).color(color.namedTextColor),
+                getColorNameComponent(color).color(color.textColor),
                 Component
                     .text("Set your color to ")
-                    .append(getColorNameComponent(color.name).color(color.namedTextColor)),
+                    .append(getColorNameComponent(color).color(color.textColor)),
                 100,
                 DialogAction.staticAction(
                     ClickEvent.callback { _ ->
-                        WaypointColor.setWaypointColor(player, color.namedTextColor)
+                        WaypointColor.setWaypointColor(player, color.textColor)
                         showDialog()
                     },
                 ),

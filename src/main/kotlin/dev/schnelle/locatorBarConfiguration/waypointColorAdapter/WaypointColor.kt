@@ -1,6 +1,6 @@
 package dev.schnelle.locatorBarConfiguration.waypointColorAdapter
 
-import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
@@ -16,11 +16,11 @@ class WaypointColor {
     companion object {
         @Volatile private var instance: WaypointColorPort? = null
 
-        fun getNamedWaypointColor(player: Player): Result<NamedTextColor?> = getInstance().getNamedWaypointColor(player)
+        fun getNamedWaypointColor(player: Player): Result<TextColor?> = getInstance().getWaypointColor(player)
 
         fun setWaypointColor(
             player: Player,
-            color: NamedTextColor,
+            color: TextColor,
         ) {
             getInstance().setWaypointColor(player, color)
         }

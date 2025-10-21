@@ -27,7 +27,7 @@ Administrators can
 
 ## Configuration
 The default configuration is automatically created inside the `LocatorBarConfiguration` directory inside your plugin directory (so usually inside `plugins/LocatorBarConfiguration`).
-You can add or remove options for transmit range, receive range and the icon color (although icon colors are limited to the ones in the default config at the moment).
+You can add or remove options for transmit range, receive range and the icon color.
 
 If the receiveRanges option is not set, players will have the same options as for transmitting.
 If you set an option to an empty list (`iconColors: []`) the option will be locked for players.

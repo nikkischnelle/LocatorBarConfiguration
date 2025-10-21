@@ -10,42 +10,47 @@ transmitRanges:
   - 1000
   - 10000
   - 100000
-  - 7000000 # "Infinite; the highest minecraft can go"
+  - 7000000 # "Infinite"; the highest minecraft can go
 
 # # all ranges that users can select as receive ranges
 # if not configured, same as transmitRanges
 # receiveRanges: []
 
 # colors players can set their waypoint icon.
-# the default list includes every allowed color
+# the following list includes every allowed named color like this:
+#   - color: black
+#     displayName: Black
+# but you can also set hex codes as allowed values like this:
+#   - color: "#694269"
+#     displayName: Custom Color
 iconColors:
-  - name: black
+  - color: black
     displayName: Black
-  - name: dark_blue
+  - color: dark_blue
     displayName: Dark Blue
-  - name: dark_green
+  - color: dark_green
     displayName: Dark Green
-  - name: dark_aqua
+  - color: dark_aqua
     displayName: Dark Aqua
-  - name: dark_red
+  - color: dark_red
     displayName: Dark Red
-  - name: dark_purple
+  - color: dark_purple
     displayName: Dark Purple
-  - name: gold
+  - color: gold
     displayName: Gold
-  - name: gray
+  - color: gray
     displayName: Gray
-  - name: dark_gray
+  - color: dark_gray
     displayName: Dark Gray
-  - name: blue
+  - color: blue
     displayName: Blue
-  - name: green
+  - color: green
     displayName: Green
-  - name: aqua
+  - color: aqua
     displayName: Aqua
-  - name: red
+  - color: red
     displayName: Red
-  - name: light_purple
+  - color: light_purple
     displayName: Light Purple
-  - name: white
+  - color: white
     displayName: White

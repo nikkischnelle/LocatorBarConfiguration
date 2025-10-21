@@ -1,14 +1,40 @@
 package dev.schnelle.locatorBarConfiguration
 
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.plugin.Plugin
 import java.lang.IllegalStateException
 
 data class ColorConfig(
-    val name: String,
     val displayName: String,
-    val namedTextColor: NamedTextColor,
-)
+    val textColor: TextColor,
+) {
+    companion object {
+        fun fromMap(map: Map<*, *>): Result<ColorConfig> {
+            try {
+                val colorString = map["color"] as String
+                val displayName = map["displayName"] as String
+                val color =
+                    NamedTextColor.NAMES.value(colorString)
+                        ?: TextColor.fromHexString(colorString)
+                        ?: return Result.failure(
+                            IllegalStateException(
+                                "Color $colorString is neither a valid minecraft color name " +
+                                    "nor a valid hex code. Ignoring.",
+                            ),
+                        )
+
+                return Result.success(ColorConfig(displayName, color))
+            } catch (_: Exception) {
+                return Result.failure(
+                    IllegalStateException(
+                        "Color items in iconColors need a `color` and `displayName`.",
+                    ),
+                )
+            }
+        }
+    }
+}
 
 class Config(
     private val plugin: Plugin,
@@ -37,23 +63,14 @@ class Config(
     fun reload() {
         plugin.reloadConfig()
         colors =
-            plugin.config.getMapList("iconColors").mapNotNull {
-                val name = it["name"] as String
-                val color =
-                    NamedTextColor.NAMES.value(name)
-                if (color != null) {
-                    ColorConfig(
-                        name,
-                        it["displayName"] as String,
-                        color,
-                    )
-                } else {
-                    plugin.logger.warning(
-                        "Color $name from config is not a valid color. Check the default config" +
-                            "for all available colors. Ignoring.",
-                    )
-                    null
-                }
+            plugin.config.getMapList("iconColors").mapNotNull { map ->
+                ColorConfig.fromMap(map).fold(
+                    onSuccess = { it },
+                    onFailure = {
+                        plugin.logger.warning(it.message)
+                        null
+                    },
+                )
             }
 
         transmitRanges = plugin.config.getDoubleList("transmitRanges")
@@ -67,7 +84,7 @@ class Config(
 
     fun getColors(): List<ColorConfig> = colors
 
-    fun getColorDisplayName(name: String): String? = colors.find { it.name == name }?.displayName
+    fun getColorDisplayName(color: TextColor): String? = colors.find { it.textColor == color }?.displayName
 
     fun getTransmitRanges(): List<Double> = transmitRanges
 
