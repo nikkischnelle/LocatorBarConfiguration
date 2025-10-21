@@ -17,7 +17,7 @@ transmitRanges:
   - 1000
   - 10000
   - 100000
-  - 7000000 # "Infinite"; the highest minecraft can go
+  - 6E7 # "Infinite"; the highest minecraft can go
 
 # # all ranges that users can select as receive ranges
 # if not configured, same as transmitRanges
