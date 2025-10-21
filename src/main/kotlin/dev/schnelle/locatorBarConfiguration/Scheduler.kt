@@ -2,6 +2,7 @@ package dev.schnelle.locatorBarConfiguration
 
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
+import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 
 class Scheduler(
@@ -17,6 +18,7 @@ class Scheduler(
 
     fun runAsyncTask(
         messageForErrors: String,
+        delaySeconds: Long,
         runnable: () -> Unit,
     ) {
         val safeRunnable = {
@@ -28,9 +30,9 @@ class Scheduler(
         }
 
         if (isFolia) {
-            Bukkit.getAsyncScheduler().runNow(plugin) { _ -> safeRunnable() }
+            Bukkit.getAsyncScheduler().runDelayed(plugin, { _ -> safeRunnable() }, delaySeconds, TimeUnit.SECONDS)
         } else {
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, safeRunnable)
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, safeRunnable, delaySeconds * 20L)
         }
     }
 }
