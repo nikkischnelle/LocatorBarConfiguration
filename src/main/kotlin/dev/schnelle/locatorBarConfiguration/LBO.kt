@@ -4,6 +4,7 @@ import dev.schnelle.locatorBarConfiguration.menu.submenus.range.MAX_RANGE
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -86,12 +87,16 @@ class LBO {
                 AttributeAdapter.disableLocatorBar(player)
             }
 
-            player.sendMessage(
-                Component.text(
-                    "Hi there! Your locator bar options have just " +
-                        "been migrated to a new plugin. Please make sure they're set correctly.",
-                ),
-            )
+            val migrationMessageString = Config.getInstance().getLBOMigrationUserNotification()
+            if (migrationMessageString.isBlank()) {
+                return
+            }
+            val message = MiniMessage.miniMessage()
+
+            player
+                .sendMessage(
+                    message.deserialize(migrationMessageString),
+                )
         }
     }
 
@@ -100,8 +105,7 @@ class LBO {
     ) : Listener {
         @EventHandler
         fun onJoin(event: PlayerJoinEvent) {
-            Scheduler(plugin).runAsyncTask("Error during LBO listener. Probably the migration.") {
-                Thread.sleep(3000)
+            Scheduler(plugin).runAsyncTask("Error during LBO listener. Probably the migration.", 1) {
                 val player = event.player
                 if (isEnabled()) {
                     if (!player.isOp) {
@@ -116,7 +120,10 @@ class LBO {
                     )
                     return@runAsyncTask
                 }
-                migratePlayer(plugin, player)
+
+                if (Config.getInstance().getEnableLBOMigration()) {
+                    migratePlayer(plugin, player)
+                }
             }
         }
     }

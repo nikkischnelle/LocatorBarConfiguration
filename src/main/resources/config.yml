@@ -1,3 +1,10 @@
+# section configuring migration from the Locator Bar Options datapack
+lboMigration:
+  # enable to try migration from Locator Bar Options. There isn't really a downside to this unless you're trying to migrate from this plugin to the datapack
+  enabled: true
+  # The message users will receive after their settings have been migrated. Set to an empty string to disable the message.
+  userNotification: "Hi there! Your locator bar options have just been migrated to a new plugin. Please make sure they're set correctly."
+
 # all ranges that users can select as transmit ranges
 transmitRanges:
   - 0

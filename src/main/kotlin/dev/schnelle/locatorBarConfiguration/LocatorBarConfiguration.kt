@@ -34,12 +34,14 @@ class LocatorBarConfiguration : JavaPlugin() {
             return
         }
 
-        LBO.registerPlayerListener(this)
-        if (LBO.isEnabled()) {
-            logger.warning(LBO.INCOMPATABILITY_MESSAGE)
-        }
-
         Config.init(this)
+
+        if (Config.getInstance().getEnableLBOChecks()) {
+            LBO.registerPlayerListener(this)
+            if (LBO.isEnabled()) {
+                logger.warning(LBO.INCOMPATABILITY_MESSAGE)
+            }
+        }
 
         val command =
             Commands

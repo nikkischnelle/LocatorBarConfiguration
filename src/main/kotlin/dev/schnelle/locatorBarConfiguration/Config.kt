@@ -2,6 +2,7 @@ package dev.schnelle.locatorBarConfiguration
 
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
+import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.plugin.Plugin
 import java.lang.IllegalStateException
 
@@ -54,6 +55,7 @@ class Config(
     private lateinit var colors: List<ColorConfig>
     private lateinit var transmitRanges: List<Double>
     private lateinit var receiveRanges: List<Double>
+    private lateinit var lboSection: ConfigurationSection
 
     init {
         plugin.saveDefaultConfig()
@@ -80,7 +82,20 @@ class Config(
             } else {
                 plugin.config.getDoubleList("receiveRanges")
             }
+        lboSection = plugin.config.getConfigurationSection("lboMigration")!!
     }
+
+    fun getEnableLBOChecks(): Boolean {
+        if (!lboSection.isSet("compatibilityChecks")) {
+            return true
+        }
+
+        return lboSection.getBoolean("compatibilityChecks")
+    }
+
+    fun getEnableLBOMigration(): Boolean = lboSection.getBoolean("enabled")
+
+    fun getLBOMigrationUserNotification(): String = lboSection.getString("userNotification") ?: ""
 
     fun getColors(): List<ColorConfig> = colors
 
