@@ -6,3 +6,8 @@ api-version: '${minecraftVersion}'
 authors: [nikkischnelle]
 description: Let players configure their locator bar in a menu.
 folia-supported: true
+
+permissions:
+  lbc.reload:
+    description: "Permission to reload Locator Bar Configuration config file"
+    default: op

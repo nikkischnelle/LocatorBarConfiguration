@@ -1,5 +1,6 @@
 package dev.schnelle.locatorBarConfiguration.menu.submenus.range
 
+import dev.schnelle.locatorBarConfiguration.Config
 import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
@@ -15,4 +16,8 @@ class TransmitRangeMenu(
         )
 
     override fun getButtonToolTip(rangeRepresentation: String): String = "Other players can see you up to $rangeRepresentation blocks away."
+
+    override fun getRanges(): List<Double> = Config.getInstance().getTransmitRanges()
+
+    override fun isLocked(): Boolean = Config.getInstance().getTransmitRanges().isEmpty()
 }

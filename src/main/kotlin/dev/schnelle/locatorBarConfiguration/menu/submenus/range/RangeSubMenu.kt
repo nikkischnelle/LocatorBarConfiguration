@@ -22,18 +22,6 @@ private val attributeToName =
 
 private fun getAttributeName(attribute: Attribute): String = attributeToName[attribute.key().value()] ?: attribute.key().value()
 
-private fun rangeToStringK(value: Double): String =
-    when {
-        value == MAX_RANGE -> "Infinite"
-        value >= 1_000_000 -> String.format("%.1fm", value / 1_000_000)
-        value >= 1_000 -> String.format("%.1fk", value / 1_000)
-        else -> value.toString()
-    }
-
-private fun getRanges(): Map<Double, String> =
-    listOf(0.0, 10.0, 20.0, 50.0, 100.0, 200.0, 500.0, 1000.0, 10000.0, 100000.0, MAX_RANGE)
-        .associateWith { rangeToStringK(it) }
-
 @Suppress("UnstableApiUsage")
 abstract class RangeSubMenu(
     private val player: Player,
@@ -52,7 +40,8 @@ abstract class RangeSubMenu(
     override fun getBody(): List<DialogBody> = bodyFromString(*getDescriptionText())
 
     override fun getActionButtons(): List<ActionButton> =
-        getRanges().map { (range, rep) ->
+        getRanges().map { range ->
+            val rep = rangeToStringK(range)
             val color =
                 when {
                     currentRange == range -> NamedTextColor.GREEN
@@ -92,4 +81,6 @@ abstract class RangeSubMenu(
     protected abstract fun getButtonToolTip(rangeRepresentation: String): String
 
     abstract fun getDescriptionText(): Array<String>
+
+    abstract fun getRanges(): List<Double>
 }

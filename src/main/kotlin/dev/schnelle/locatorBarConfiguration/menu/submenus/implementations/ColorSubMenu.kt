@@ -1,5 +1,6 @@
 package dev.schnelle.locatorBarConfiguration.menu.submenus.implementations
 
+import dev.schnelle.locatorBarConfiguration.Config
 import dev.schnelle.locatorBarConfiguration.menu.bodyFromString
 import dev.schnelle.locatorBarConfiguration.menu.getColorName
 import dev.schnelle.locatorBarConfiguration.menu.getColorNameComponent
@@ -44,20 +45,21 @@ class ColorSubMenu(
         }
 
     override fun getActionButtons(): List<ActionButton> =
-        NamedTextColor.NAMES.keys().map { name ->
-            val color = NamedTextColor.NAMES.value(name)!!
+        Config.getInstance().getColors().map { color ->
             ActionButton.create(
-                getColorNameComponent(name).color(color),
+                getColorNameComponent(color.name).color(color.namedTextColor),
                 Component
                     .text("Set your color to ")
-                    .append(getColorNameComponent(name).color(color)),
+                    .append(getColorNameComponent(color.name).color(color.namedTextColor)),
                 100,
                 DialogAction.staticAction(
                     ClickEvent.callback { _ ->
-                        WaypointColor.setWaypointColor(player, color)
+                        WaypointColor.setWaypointColor(player, color.namedTextColor)
                         showDialog()
                     },
                 ),
             )
         }
+
+    override fun isLocked(): Boolean = Config.getInstance().getColors().isEmpty()
 }

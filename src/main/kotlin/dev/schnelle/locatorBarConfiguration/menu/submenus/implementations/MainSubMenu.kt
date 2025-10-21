@@ -40,6 +40,8 @@ class MainSubMenu(
             ColorSubMenu(player, this).getNavigationButton(),
         )
 
+    override fun isLocked(): Boolean = false
+
     private fun getToggleButton(): ActionButton {
         val barEnabled = AttributeAdapter.isLocatorBarEnabled(player)
 

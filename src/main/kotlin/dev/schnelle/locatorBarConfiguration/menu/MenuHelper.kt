@@ -1,5 +1,6 @@
 package dev.schnelle.locatorBarConfiguration.menu
 
+import dev.schnelle.locatorBarConfiguration.Config
 import io.papermc.paper.registry.data.dialog.body.DialogBody
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -21,7 +22,7 @@ fun createdByMessage(skullItem: ItemStack): List<DialogBody> =
         DialogBody.item(skullItem).showTooltip(false).build(),
     )
 
-private val colorTranslations =
+private val defaultColorTranslations =
     mapOf(
         "dark_red" to "Dark Red",
         "green" to "Green",
@@ -43,4 +44,6 @@ private val colorTranslations =
 
 fun getColorNameComponent(color: String): Component = Component.text(getColorName(color))
 
-fun getColorName(color: String): String = colorTranslations[color] ?: color
+fun getColorName(color: String): String =
+    Config.getInstance().getColorDisplayName(color)
+        ?: defaultColorTranslations[color] ?: color
