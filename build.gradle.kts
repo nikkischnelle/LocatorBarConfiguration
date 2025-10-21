@@ -81,7 +81,7 @@ modrinth {
     versionType.set("release")
     uploadFile.set(tasks.shadowJar)
     gameVersions.addAll(supportedMinecraftVersions)
-    loaders.addAll("paper", "folia")
+    loaders.addAll("paper", "folia", "purpur")
 }
 
 kotlin { jvmToolchain(targetJavaVersion) }
