@@ -1,5 +1,6 @@
 package dev.schnelle.locatorBarConfiguration.waypointColorAdapter
 
+import dev.schnelle.locatorBarConfiguration.AttributeAdapter
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.entity.Player
@@ -24,8 +25,14 @@ class WaypointColorAdapter1_21 : WaypointColorPort {
         color: TextColor,
     ) {
         runCatching {
-            val icon = (player as CraftPlayer).handle.waypointIcon()
+            val nmsPlayer = (player as CraftPlayer).handle
+            val icon = nmsPlayer.waypointIcon()
             icon.color = Optional.of(color.value())
+
+            if (AttributeAdapter.isLocatorBarEnabled(player)) {
+                AttributeAdapter.disableLocatorBar(player)
+                AttributeAdapter.enableLocatorBar(player)
+            }
         }
     }
 }
