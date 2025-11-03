@@ -84,4 +84,13 @@ modrinth {
     loaders.addAll("paper", "folia", "purpur")
 }
 
+val ktLintVersion: String by project
+
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+    version.set(ktLintVersion)
+    android.set(false)
+    outputToConsole.set(true)
+    ignoreFailures.set(false)
+}
+
 kotlin { jvmToolchain(targetJavaVersion) }
