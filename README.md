@@ -3,14 +3,8 @@ A small paper plugin that allows players to change their locator bar settings wi
 Inspired by RedSyven's Datapack [Locator Bar Options](https://modrinth.com/datapack/locator-bar-options).
 
 You can access the menu from the pause screen (either through `Locator Bar Configuration` or `Custom Options` and then `Locator Bar Configuration`)
-![usage-gif](/media/usage.gif)
 
-## Disclaimer
-Be aware that this plugin uses Paper's **experimental** [Dialog API](https://docs.papermc.io/paper/dev/dialogs/). It might be more error-prone than other plugins.
-I have not found any issues with it during my testing.
-
-> ### Folia
-> **Folia doesn't support waypoints yet**. I marked this compatible as it should be fully compatible once Folia supports waypoints/the locator bar.
+![usage-gif](https://raw.githubusercontent.com/nikkischnelle/LocatorBarConfiguration/refs/heads/main/media/usage.gif)
 
 ## Features
 Supported Minecraft Versions: `1.21.8 - 1.21.10`
@@ -37,6 +31,11 @@ If you set an option to an empty list (`iconColors: []`) the option will be lock
 ## Migration from Locator Bar Options
 To migrate from Locator Bar Options, simply install the plugin and disable the LocatorBarOptions datapack.
 User data will automatically be migrated once they (re-)join. They will be notified about this migration so they can ensure the migration worked correctly.
+
+**More notes about migration can be found [in the wiki](https://github.com/nikkischnelle/LocatorBarConfiguration/wiki/LocatorBarOptions-migration).**
+
+## Folia
+**Folia doesn't support waypoints yet**. Folia forks that implement waypoint support will likely work already, though. CanvasMC is one such fork and officially supported.
 
 ## Why?
 While RedSyven's datapack worked fine for our purposes, some players ran into undiagnosable issues with their options not being updated.  
