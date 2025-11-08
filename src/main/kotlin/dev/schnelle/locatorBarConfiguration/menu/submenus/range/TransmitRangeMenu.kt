@@ -5,6 +5,9 @@ import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 
+/**
+ * Submenu for configuring the players transmit range.
+ */
 class TransmitRangeMenu(
     player: Player,
     parentMenu: AbstractMenu?,

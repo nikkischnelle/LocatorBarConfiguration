@@ -22,6 +22,9 @@ abstract class AbstractSubMenu(
     private val parentMenu: AbstractMenu?,
     private val columns: Int = 2,
 ) : AbstractMenu() {
+    /**
+     * Show the menu to the player.
+     */
     fun showDialog() {
         showDialog(player)
     }
@@ -40,18 +43,39 @@ abstract class AbstractSubMenu(
             ).type(DialogType.multiAction(getActionButtons(), getExitActionButton(), columns))
     }
 
+    /**
+     * Get the body for the submenu.
+     * Used for building.
+     */
     protected abstract fun getBody(): List<DialogBody>
 
+    /**
+     * Get the action buttons for the submenu.
+     * Used for building.
+     */
     protected abstract fun getActionButtons(): List<ActionButton>
 
-    private fun getExitActionButton(): ActionButton =
-        ActionButton.create(
-            Component.text("Done"),
-            null,
-            BACK_BUTTON_SIZE,
-            DialogAction.staticAction(ClickEvent.callback { _ -> parentMenu?.showDialog(player) }),
-        )
+    /**
+     * Check if the menu is locked.
+     *
+     * If this returns true, there is no reason for the menu to open.
+     * The navigation button in `getNavigationButton` will not have a click action and the tooltip will hint at this.
+     */
+    abstract fun isLocked(): Boolean
 
+    /**
+     * Get the content inside the navigation button.
+     */
+    protected abstract fun getNavigationButtonContent(): Component
+
+    /**
+     * Get the text inside the navigation buttons tooltip.
+     */
+    protected abstract fun getNavigationTooltip(): String
+
+    /**
+     * Get the navigation button that opens this submenu.
+     */
     fun getNavigationButton(): ActionButton {
         beforeDialog()
         return ActionButton.create(
@@ -62,8 +86,11 @@ abstract class AbstractSubMenu(
         )
     }
 
-    abstract fun isLocked(): Boolean
-
+    /**
+     * Get the action of the navigation button.
+     *
+     * null if `isLocked()` returns true.
+     */
     private fun getLockableNavigationAction(): DialogAction? =
         if (!isLocked()) {
             DialogAction.customClick(
@@ -76,8 +103,6 @@ abstract class AbstractSubMenu(
         } else {
             null
         }
-
-    abstract fun getNavigationButtonContent(): Component
 
     private fun lockableNavigationTooltip(): Component {
         val original = Component.text(getNavigationTooltip())
@@ -92,5 +117,11 @@ abstract class AbstractSubMenu(
         }
     }
 
-    abstract fun getNavigationTooltip(): String
+    private fun getExitActionButton(): ActionButton =
+        ActionButton.create(
+            Component.text("Done"),
+            null,
+            BACK_BUTTON_SIZE,
+            DialogAction.staticAction(ClickEvent.callback { _ -> parentMenu?.showDialog(player) }),
+        )
 }

@@ -14,6 +14,11 @@ import net.kyori.adventure.text.event.ClickCallback
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.entity.Player
 
+/**
+ * Main submenu.
+ *
+ * Used for enabling and disabling the locator bar entirely and for navigation to other submenus.
+ */
 @Suppress("UnstableApiUsage")
 class MainSubMenu(
     private val player: Player,
@@ -40,8 +45,12 @@ class MainSubMenu(
             ColorSubMenu(player, this).getNavigationButton(),
         )
 
+    // The main menu can never be locked.
     override fun isLocked(): Boolean = false
 
+    /**
+     * Get button to toggle locator bar entirely.
+     */
     private fun getToggleButton(): ActionButton {
         val barEnabled = AttributeAdapter.isLocatorBarEnabled(player)
 

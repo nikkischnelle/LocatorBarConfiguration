@@ -6,11 +6,29 @@ import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.plugin.Plugin
 import java.lang.IllegalStateException
 
+/**
+ * Configuration of a single color.
+ *
+ * Includes a display name and the TextColor representation.
+ */
 data class ColorConfig(
     val displayName: String,
     val textColor: TextColor,
 ) {
     companion object {
+        /**
+         * Get a ColorConfig from a Map.
+         *
+         * The map has to be formatted like:
+         * ```yaml
+         * color: green
+         * displayName: Green
+         * ```
+         *
+         * @param map the map to parse
+         *
+         * @return the ColorConfig with parse exceptions wrapped in a result.
+         */
         fun fromMap(map: Map<*, *>): Result<ColorConfig> {
             try {
                 val colorString = map["color"] as String
@@ -37,18 +55,31 @@ data class ColorConfig(
     }
 }
 
+/**
+ * General parsed configuration.
+ *
+ * Includes a Singleton-type architecture so `Config.getInstance()` can be called from anywhere to get the current one.
+ */
 class Config(
     private val plugin: Plugin,
 ) {
     companion object {
         @Volatile private var instance: Config? = null
 
+        /**
+         * Initialize the configuration instance.
+         */
         fun init(plugin: Plugin) {
             synchronized(this) {
                 instance = Config(plugin)
             }
         }
 
+        /**
+         * Get initialized config.
+         *
+         * @throws IllegalStateException if the config has not been initialized yet
+         */
         fun getInstance(): Config = instance ?: throw IllegalStateException("Config was not initialized.")
     }
 
@@ -62,6 +93,10 @@ class Config(
         reload()
     }
 
+    /**
+     * Reload the config from the configuration file.
+     * the current instance will contain the reloaded values
+     */
     fun reload() {
         plugin.reloadConfig()
         colors =

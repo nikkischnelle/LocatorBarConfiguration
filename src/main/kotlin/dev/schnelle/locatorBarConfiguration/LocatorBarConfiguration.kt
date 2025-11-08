@@ -39,7 +39,7 @@ class LocatorBarConfiguration : JavaPlugin() {
         if (Config.getInstance().getEnableLBOChecks()) {
             LBO.registerPlayerListener(this)
             if (LBO.isEnabled()) {
-                logger.warning(LBO.INCOMPATABILITY_MESSAGE)
+                logger.warning(LBO.INCOMPATIBILITY_MESSAGE)
             }
         }
 

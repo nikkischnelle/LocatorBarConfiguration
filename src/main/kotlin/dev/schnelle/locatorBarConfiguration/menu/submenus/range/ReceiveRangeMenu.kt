@@ -5,6 +5,9 @@ import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 
+/**
+ * Submenu for configuring the players receive range.
+ */
 class ReceiveRangeMenu(
     player: Player,
     parentMenu: AbstractMenu?,

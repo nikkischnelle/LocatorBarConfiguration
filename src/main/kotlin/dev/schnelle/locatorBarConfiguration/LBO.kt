@@ -14,15 +14,23 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.Plugin
 
+/**
+ * LocatorBarOption compatibility
+ */
 class LBO {
     companion object {
-        const val INCOMPATABILITY_MESSAGE =
+        const val INCOMPATIBILITY_MESSAGE =
             "Locator Bar Configuration AND RedSyven's Locator Bar Options enabled. Neither will work properly."
 
         private val lboKeyOff = NamespacedKey("lbo", "off")
         private val lboKeyNormalize = NamespacedKey("lbo", "normalize")
         private val lboKeyCustomize = NamespacedKey("lbo", "customize")
 
+        /**
+         * check if Locator Bar Options datapack is enabled.
+         *
+         * Filters by description, which is NOT a perfect way to do it.
+         */
         fun isEnabled(): Boolean {
             Bukkit.getDatapackManager().refreshPacks()
             return !Bukkit
@@ -32,10 +40,16 @@ class LBO {
                 .none { it.content().startsWith("RedSyven's Locator Bar Options") }
         }
 
+        /**
+         * Register player listener used for automatic data migration and admin incompatibility notifications.
+         */
         fun registerPlayerListener(plugin: Plugin) {
             Bukkit.getPluginManager().registerEvents(PlayerListener(plugin), plugin)
         }
 
+        /**
+         * Migrate a players data from Locator Bar Options to the plugin.
+         */
         fun migratePlayer(
             plugin: Plugin,
             player: Player,
@@ -109,6 +123,9 @@ class LBO {
         }
     }
 
+    /**
+     * Listener used for automatic data migration and admin incompatibility notifications.
+     */
     class PlayerListener(
         private val plugin: Plugin,
     ) : Listener {
@@ -125,7 +142,7 @@ class LBO {
                         Component
                             .text("Incompatibility Alert: ", NamedTextColor.RED)
                             .appendNewline()
-                            .append(Component.text(INCOMPATABILITY_MESSAGE)),
+                            .append(Component.text(INCOMPATIBILITY_MESSAGE)),
                     )
                     return@runAsyncTask
                 }

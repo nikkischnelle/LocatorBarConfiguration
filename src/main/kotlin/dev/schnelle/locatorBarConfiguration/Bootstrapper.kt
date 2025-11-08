@@ -22,7 +22,6 @@ class Bootstrapper : PluginBootstrap {
                 event.registry().register(
                     TypedKey.create(RegistryKey.DIALOG, Key.key("lbc:menu")),
                 ) { builder ->
-                    //                    MenuDialogBuilder.build(builder)
                     MainMenu().build(builder)
                 }
             },

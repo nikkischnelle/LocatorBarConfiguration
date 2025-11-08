@@ -1,7 +1,7 @@
 package dev.schnelle.locatorBarConfiguration.menu.submenus.range
 
-import dev.schnelle.locatorBarConfiguration.AttributeAdapter.Companion.getAttributeBaseValue
-import dev.schnelle.locatorBarConfiguration.AttributeAdapter.Companion.setAttributeBaseValue
+import dev.schnelle.locatorBarConfiguration.AttributeAdapter.getAttributeBaseValue
+import dev.schnelle.locatorBarConfiguration.AttributeAdapter.setAttributeBaseValue
 import dev.schnelle.locatorBarConfiguration.menu.bodyFromString
 import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractMenu
 import dev.schnelle.locatorBarConfiguration.menu.submenus.AbstractSubMenu
@@ -14,6 +14,9 @@ import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 
+/**
+ * Map of Attribute object to a readable string.
+ */
 private val attributeToName =
     mapOf(
         Attribute.WAYPOINT_TRANSMIT_RANGE.key().value() to "Transmit",
@@ -22,6 +25,9 @@ private val attributeToName =
 
 private fun getAttributeName(attribute: Attribute): String = attributeToName[attribute.key().value()] ?: attribute.key().value()
 
+/**
+ * Submenu for configuring ranges.
+ */
 @Suppress("UnstableApiUsage")
 abstract class RangeSubMenu(
     private val player: Player,
@@ -39,6 +45,11 @@ abstract class RangeSubMenu(
 
     override fun getBody(): List<DialogBody> = bodyFromString(*getDescriptionText())
 
+    /**
+     * Get range action buttons.
+     *
+     * Includes a button for each configured available range.
+     */
     override fun getActionButtons(): List<ActionButton> =
         getRanges().map { range ->
             val rep = rangeToStringK(range)
@@ -56,6 +67,11 @@ abstract class RangeSubMenu(
             )
         }
 
+    /**
+     * Callback that gets called when a range action button is pressed.
+     *
+     * Callbacks automatically close the current dialogs, so it re-shows the dialog in the end.
+     */
     private fun callback(range: Double): DialogAction.CustomClickAction =
         DialogAction.customClick(
             { _, audience ->
@@ -71,14 +87,17 @@ abstract class RangeSubMenu(
                 .build(),
         )
 
+    /**
+     * Get tooltip for a range button.
+     */
+    protected abstract fun getButtonToolTip(rangeRepresentation: String): String
+
     override fun getNavigationButtonContent(): Component =
         Component
             .text("$attributeName Range: ")
             .append(Component.text("$currentRangeRep blocks").color(NamedTextColor.LIGHT_PURPLE))
 
     override fun getNavigationTooltip(): String = getDescriptionText().first()
-
-    protected abstract fun getButtonToolTip(rangeRepresentation: String): String
 
     abstract fun getDescriptionText(): Array<String>
 

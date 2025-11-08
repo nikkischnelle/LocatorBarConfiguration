@@ -34,7 +34,7 @@ class ColorSubMenu(
     override fun getNavigationTooltip(): String = "Select which color your icon appears for other plays on their locator bars."
 
     override fun beforeDialog() {
-        currentColor = WaypointColor.getNamedWaypointColor(player).getOrNull()
+        currentColor = WaypointColor.getWaypointColor(player).getOrNull()
     }
 
     override fun getBody(): List<DialogBody> =
