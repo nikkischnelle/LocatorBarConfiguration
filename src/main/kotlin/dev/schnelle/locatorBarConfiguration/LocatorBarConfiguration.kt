@@ -6,9 +6,12 @@ import io.papermc.paper.datapack.Datapack
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import org.bstats.bukkit.Metrics
 import org.bukkit.plugin.java.JavaPlugin
 
 private const val RELOAD_PERMISSION = "lbc.reload"
+
+private const val BSTATS_PLUGIN_ID = 27941
 
 class LocatorBarConfiguration : JavaPlugin() {
     private var datapack: Datapack? = null
@@ -35,6 +38,8 @@ class LocatorBarConfiguration : JavaPlugin() {
         }
 
         Config.init(this)
+
+        Metrics(this, BSTATS_PLUGIN_ID)
 
         if (Config.getInstance().getEnableLBOChecks()) {
             LBO.registerPlayerListener(this)

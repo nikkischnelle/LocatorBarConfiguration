@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm")
     id("com.gradleup.shadow")
@@ -14,6 +16,7 @@ val pluginVersion: String by project
 val minecraftMinor: String by project
 val minecraftPatch: String by project
 val paperApiSubVersion: String by project
+val bStatsVersion: String by project
 
 val mcMinor = System.getenv("LBC_BUILD_MC_MINOR") ?: minecraftMinor
 val mcPatch = System.getenv("LBC_BUILD_MC_PATCH") ?: minecraftPatch
@@ -31,6 +34,7 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("$minecraftVersion-$paperApiSubVersion")
+    implementation("org.bstats:bstats-bukkit:$bStatsVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation(kotlin("reflect"))
 }
@@ -72,6 +76,10 @@ tasks {
         filteringCharset = "UTF-8"
         filesMatching("paper-plugin.yml") { expand(props) }
     }
+
+    withType<ShadowJar> {
+        relocate("org.bstats", "dev.schnelle.bstats")
+    }
 }
 
 modrinth {
@@ -93,4 +101,5 @@ configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
     ignoreFailures.set(false)
 }
 
+kotlin { jvmToolchain(targetJavaVersion) }
 kotlin { jvmToolchain(targetJavaVersion) }
