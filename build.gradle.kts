@@ -1,30 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
-plugins {
-    kotlin("jvm")
-    id("com.gradleup.shadow")
-    id("xyz.jpenilla.run-paper")
-    id("com.modrinth.minotaur")
-    id("io.papermc.paperweight.userdev")
-    id("org.jlleitschuh.gradle.ktlint")
-}
 
 val targetJavaVersion = 21
-
-val projectName: String by project
-val pluginVersion: String by project
-val minecraftMinor: String by project
-val minecraftPatch: String by project
-val paperApiSubVersion: String by project
-val bStatsVersion: String by project
-
-val mcMinor = System.getenv("LBC_BUILD_MC_MINOR") ?: minecraftMinor
-val mcPatch = System.getenv("LBC_BUILD_MC_PATCH") ?: minecraftPatch
-
-val minecraftVersion = "1.$mcMinor.$mcPatch"
-
-val supportedMinecraftVersions = listOf("1.21.8", "1.21.9", "1.21.10")
-
 group = "dev.schnelle"
 
 repositories {
@@ -32,21 +9,41 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/") { name = "papermc-repo" }
 }
 
+plugins {
+    alias(libs.plugins.kotlinJvm)
+    alias(libs.plugins.paperWeightUserdev)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.runPaper)
+    alias(libs.plugins.minotaur)
+    alias(libs.plugins.ktlint)
+}
+
+val projectName: String by project
+val pluginVersion: String by project
+
+val supportedMinecraftVersions: String by project
+val supportedMinecraftVersionList = supportedMinecraftVersions.split(",")
+val buildMinecraftVersion = supportedMinecraftVersionList.first()
+
+println("Building against: $buildMinecraftVersion")
+println("Advertising support for versions:")
+supportedMinecraftVersionList.forEach { version -> println(" - $version") }
+
 dependencies {
-    paperweight.paperDevBundle("$minecraftVersion-$paperApiSubVersion")
-    implementation("org.bstats:bstats-bukkit:$bStatsVersion")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    paperweight.paperDevBundle("$buildMinecraftVersion-${libs.versions.paperApiRevision.get()}")
+    implementation(libs.bstats)
+    implementation(libs.kotlin.stdlib)
     implementation(kotlin("reflect"))
 }
 
 runPaper.folia.registerTask {
-    minecraftVersion(minecraftVersion)
+    minecraftVersion(buildMinecraftVersion)
     runDirectory(file("run/folia"))
 }
 
 tasks {
     runServer {
-        minecraftVersion(minecraftVersion)
+        minecraftVersion(buildMinecraftVersion)
         runDirectory(file("run/paper"))
     }
 
@@ -69,7 +66,7 @@ tasks {
         val props =
             mapOf(
                 "version" to pluginVersion,
-                "minecraftVersion" to minecraftVersion,
+                "minecraftVersion" to buildMinecraftVersion,
                 "projectName" to projectName,
             )
         inputs.properties(props)
@@ -78,7 +75,7 @@ tasks {
     }
 
     withType<ShadowJar> {
-        relocate("org.bstats", "dev.schnelle.bstats")
+        relocate("org.bstats", "$group.bstats")
     }
 }
 
@@ -88,14 +85,12 @@ modrinth {
     versionNumber.set(pluginVersion)
     versionType.set("release")
     uploadFile.set(tasks.shadowJar)
-    gameVersions.addAll(supportedMinecraftVersions)
+    gameVersions.addAll(supportedMinecraftVersionList)
     loaders.addAll("paper", "folia", "purpur")
 }
 
-val ktLintVersion: String by project
-
 configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-    version.set(ktLintVersion)
+    version.set(libs.versions.ktlint.get())
     android.set(false)
     outputToConsole.set(true)
     ignoreFailures.set(false)
