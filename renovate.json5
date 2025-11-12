@@ -1,0 +1,12 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    "config:best-practices",
+    ':reviewer(nikkischnelle)',
+  ],
+  separateMajorMinor: true,
+  separateMinorPatch: true,
+  separateMultipleMajor: true,
+  prHourlyLimit: 5,
+  prConcurrentLimit: 5,
+}
