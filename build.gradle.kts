@@ -32,7 +32,6 @@ supportedMinecraftVersionList.forEach { version -> logger.lifecycle(" - $version
 dependencies {
     paperweight.paperDevBundle("$buildMinecraftVersion-${libs.versions.paperApiRevision.get()}")
     implementation(libs.bstats)
-    implementation(libs.kotlin.stdlib)
     implementation(kotlin("reflect"))
 }
 

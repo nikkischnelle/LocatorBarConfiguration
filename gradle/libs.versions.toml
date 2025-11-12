@@ -4,7 +4,6 @@ ktlint = "1.7.1"
 
 [libraries]
 bstats = { group = "org.bstats", name = "bstats-bukkit", version = "3.0.2"}
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8"}
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.2.20"}
