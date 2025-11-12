@@ -9,4 +9,5 @@
   separateMultipleMajor: true,
   prHourlyLimit: 5,
   prConcurrentLimit: 5,
+  dependencyDashboardAutoclose: true,
 }
