@@ -25,9 +25,9 @@ val supportedMinecraftVersions: String by project
 val supportedMinecraftVersionList = supportedMinecraftVersions.split(",")
 val buildMinecraftVersion = supportedMinecraftVersionList.first()
 
-println("Building against: $buildMinecraftVersion")
-println("Advertising support for versions:")
-supportedMinecraftVersionList.forEach { version -> println(" - $version") }
+logger.lifecycle("Building against: $buildMinecraftVersion")
+logger.lifecycle("Advertising support for versions:")
+supportedMinecraftVersionList.forEach { version -> logger.lifecycle(" - $version") }
 
 dependencies {
     paperweight.paperDevBundle("$buildMinecraftVersion-${libs.versions.paperApiRevision.get()}")
