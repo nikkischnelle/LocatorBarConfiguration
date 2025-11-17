@@ -15,6 +15,7 @@ private const val BSTATS_PLUGIN_ID = 27941
 
 class LocatorBarConfiguration : JavaPlugin() {
     private var datapack: Datapack? = null
+    private lateinit var bstats: Metrics
 
     override fun onLoad() {
         datapack = server.datapackManager.getPack(pluginMeta.name + "/provided")
@@ -39,7 +40,7 @@ class LocatorBarConfiguration : JavaPlugin() {
 
         Config.init(this)
 
-        Metrics(this, BSTATS_PLUGIN_ID)
+        bstats = Metrics(this, BSTATS_PLUGIN_ID)
 
         if (Config.getInstance().getEnableLBOChecks()) {
             LBO.registerPlayerListener(this)
@@ -73,5 +74,7 @@ class LocatorBarConfiguration : JavaPlugin() {
         }
     }
 
-    override fun onDisable() {}
+    override fun onDisable() {
+        bstats.shutdown()
+    }
 }
