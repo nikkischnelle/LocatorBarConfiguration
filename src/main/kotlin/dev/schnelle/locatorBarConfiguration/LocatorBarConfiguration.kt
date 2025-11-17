@@ -69,9 +69,7 @@ class LocatorBarConfiguration : JavaPlugin() {
     }
 
     fun disableDatapack() {
-        if (datapack?.isEnabled ?: false) {
-            datapack?.isEnabled = false
-        }
+        datapack?.isEnabled = false
     }
 
     override fun onDisable() {
