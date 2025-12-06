@@ -1,8 +1,7 @@
 name: Build
 on:
   push:
-    branches:
-      - main
+
 permissions:
   contents: write
 jobs:
@@ -27,20 +26,19 @@ jobs:
           ./gradlew build --stacktrace
           ls build/jar
       - name: Get plugin version
+        if: github.ref == 'refs/heads/main'
         id: get_version
         run: |
           pluginVersion=$(grep '^pluginVersion=' gradle.properties)
           echo "$pluginVersion"
           echo "$pluginVersion" >> $GITHUB_OUTPUT
       - name: Check if tag exists locally
+        if: github.ref == 'refs/heads/main'
         id: check_tag
         run: |
           tag="v${{ steps.get_version.outputs.pluginVersion }}"
           echo "Checking if tag '$tag' exists..."
-
-          # Fetch all tags
           git fetch --tags
-
           if git rev-parse "$tag" >/dev/null 2>&1; then
             echo "Tag $tag exists."
             echo "exists=true" >> $GITHUB_OUTPUT
@@ -48,8 +46,9 @@ jobs:
             echo "Tag $tag does not exist."
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
+
       - name: Upload to release
-        if: steps.check_tag.outputs.exists == 'false'
+        if: steps.check_tag.outputs.exists == 'false' && github.ref == 'refs/heads/main'
         uses: svenstaro/upload-release-action@6b7fa9f267e90b50a19fef07b3596790bb941741 # v2
         continue-on-error: true
         with:
@@ -57,8 +56,9 @@ jobs:
           tag: "v${{ steps.get_version.outputs.pluginVersion }}"
           file_glob: true
           file: build/jar/*.jar
+
       - name: Upload to Modrinth
-        if: steps.check_tag.outputs.exists == 'false'
+        if: steps.check_tag.outputs.exists == 'false' && github.ref == 'refs/heads/main'
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: |-
