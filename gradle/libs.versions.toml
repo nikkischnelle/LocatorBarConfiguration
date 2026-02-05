@@ -6,7 +6,7 @@ ktlint = "1.7.1"
 bstats = { group = "org.bstats", name = "bstats-bukkit", version = "3.1.0"}
 
 [plugins]
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.3.0"}
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.3.10"}
 paperWeightUserdev = { id = "io.papermc.paperweight.userdev", version = "2.0.0-beta.19" }
 shadow = { id = "com.gradleup.shadow", version = "9.3.1" }
 runPaper = { id = "xyz.jpenilla.run-paper", version = "3.0.2" }
