@@ -3,7 +3,7 @@ paperApiRevision = "R0.1-SNAPSHOT"
 ktlint = "1.7.1"
 
 [libraries]
-bstats = { group = "org.bstats", name = "bstats-bukkit", version = "3.1.0"}
+bstats = { group = "org.bstats", name = "bstats-bukkit", version = "3.2.1"}
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.3.0"}
