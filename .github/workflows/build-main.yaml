@@ -49,7 +49,7 @@ jobs:
 
       - name: Upload to release
         if: steps.check_tag.outputs.exists == 'false' && github.ref == 'refs/heads/main'
-        uses: svenstaro/upload-release-action@6b7fa9f267e90b50a19fef07b3596790bb941741 # v2
+        uses: svenstaro/upload-release-action@b98a3b12e86552593f3e4e577ca8a62aa2f3f22b # v2
         continue-on-error: true
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
