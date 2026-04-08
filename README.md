@@ -7,7 +7,7 @@ You can access the menu from the pause screen (either through `Locator Bar Confi
 ![usage-gif](https://raw.githubusercontent.com/nikkischnelle/LocatorBarConfiguration/refs/heads/main/media/usage.gif)
 
 ## Features
-Supported Minecraft Versions: `1.21.8 - 1.21.10`
+Supported Minecraft Versions: `1.21.8 - 26.1.1`
 
 Each player can
 - toggle their locator bar on and off 
