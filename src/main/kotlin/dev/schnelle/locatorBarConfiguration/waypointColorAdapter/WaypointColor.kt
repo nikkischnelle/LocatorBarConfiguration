@@ -13,6 +13,7 @@ private val versionToAdapter =
         "1.21.11" to ::WaypointColorAdapter1_21,
         "26.1" to ::WaypointColorAdapter1_21,
         "26.1.1" to ::WaypointColorAdapter1_21,
+        "26.1.2" to ::WaypointColorAdapter1_21,
     )
 
 /**
