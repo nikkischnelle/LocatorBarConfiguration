@@ -24,6 +24,7 @@ val pluginVersion: String by project
 val supportedMinecraftVersions: String by project
 val supportedMinecraftVersionList = supportedMinecraftVersions.split(",")
 val buildMinecraftVersion = supportedMinecraftVersionList.first()
+val runMinecraftVersion = supportedMinecraftVersionList.last()
 
 logger.lifecycle("Building against: $buildMinecraftVersion")
 logger.lifecycle("Advertising support for versions:")
@@ -36,13 +37,13 @@ dependencies {
 }
 
 runPaper.folia.registerTask {
-    minecraftVersion(buildMinecraftVersion)
+    minecraftVersion(runMinecraftVersion)
     runDirectory(file("run/folia"))
 }
 
 tasks {
     runServer {
-        minecraftVersion(buildMinecraftVersion)
+        minecraftVersion(runMinecraftVersion)
         runDirectory(file("run/paper"))
     }
 
