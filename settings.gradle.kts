@@ -1,3 +1,3 @@
-val projectName: String by settings
+val projectName: String = providers.gradleProperty("projectName").get()
 
 rootProject.name = projectName

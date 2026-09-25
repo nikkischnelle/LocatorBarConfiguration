@@ -2,6 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 
 val targetJavaVersion = 21
+val buildJavaVersion = 25
 group = "dev.schnelle"
 
 repositories {
@@ -18,10 +19,10 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-val projectName: String by project
-val pluginVersion: String by project
+val projectName: String = property("projectName") as String
+val pluginVersion: String = property("pluginVersion") as String
 
-val supportedMinecraftVersions: String by project
+val supportedMinecraftVersions: String = property("supportedMinecraftVersions") as String
 val supportedMinecraftVersionList = supportedMinecraftVersions.split(",")
 val buildMinecraftVersion = supportedMinecraftVersionList.first()
 val runMinecraftVersion = supportedMinecraftVersionList.last()
@@ -55,6 +56,8 @@ tasks {
     shadowJar {
         destinationDirectory.set(file("${layout.buildDirectory.get()}/jar"))
         archiveFileName.set("$projectName-$pluginVersion.jar")
+
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 
     build {
@@ -77,6 +80,19 @@ tasks {
     withType<ShadowJar> {
         relocate("org.bstats", "$group.bstats")
     }
+
+    withType<JavaCompile>().configureEach {
+        options.release.set(targetJavaVersion)
+    }
+
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(
+                org.jetbrains.kotlin.gradle.dsl.JvmTarget
+                    .fromTarget(targetJavaVersion.toString()),
+            )
+        }
+    }
 }
 
 modrinth {
@@ -96,5 +112,6 @@ configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
     ignoreFailures.set(false)
 }
 
-kotlin { jvmToolchain(targetJavaVersion) }
-kotlin { jvmToolchain(targetJavaVersion) }
+kotlin {
+    jvmToolchain(buildJavaVersion)
+}
