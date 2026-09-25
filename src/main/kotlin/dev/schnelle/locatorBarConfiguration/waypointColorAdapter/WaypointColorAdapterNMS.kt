@@ -8,7 +8,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 @Suppress("ClassName")
-class WaypointColorAdapter1_21 : WaypointColorPort {
+class WaypointColorAdapterNMS : WaypointColorPort {
     override fun getWaypointColor(player: Player): TextColor? {
         val icon = (player as CraftPlayer).handle.waypointIcon()
         val color = icon.color.getOrNull()

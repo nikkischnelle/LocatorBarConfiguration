@@ -4,19 +4,6 @@ import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-private val versionToAdapter =
-    mapOf(
-        "1.21.7" to ::WaypointColorAdapter1_21,
-        "1.21.8" to ::WaypointColorAdapter1_21,
-        "1.21.9" to ::WaypointColorAdapter1_21,
-        "1.21.10" to ::WaypointColorAdapter1_21,
-        "1.21.11" to ::WaypointColorAdapter1_21,
-        "26.1" to ::WaypointColorAdapter1_21,
-        "26.1.1" to ::WaypointColorAdapter1_21,
-        "26.1.2" to ::WaypointColorAdapter1_21,
-        "26.2" to ::WaypointColorAdapter1_21,
-    )
-
 /**
  * Singleton Wrapper for WaypointColorPorts.
  *
@@ -24,7 +11,8 @@ private val versionToAdapter =
  */
 class WaypointColor {
     companion object {
-        @Volatile private var instance: WaypointColorPort? = null
+        @Volatile
+        private var instance: WaypointColorPort? = null
 
         /**
          * Get a players waypoint color.
@@ -73,12 +61,14 @@ class WaypointColor {
         private fun getInstance(): WaypointColorPort = instance ?: synchronized(this) { createInstance().also { instance = it } }
 
         /**
-         * Create a new WaypointColorPort based on Minecraft version.
+         * Create a new WaypointColorPort.
          */
-        private fun createInstance(): WaypointColorPort =
-            versionToAdapter
-                .getOrElse(Bukkit.getServer().minecraftVersion) {
-                    throw IllegalStateException("Unsupported Minecraft version")
-                }.call()
+        private fun createInstance(): WaypointColorPort {
+            if (WaypointColorAdapterPaper.isSupported) {
+                return WaypointColorAdapterPaper()
+            }
+
+            return WaypointColorAdapterNMS()
+        }
     }
 }
