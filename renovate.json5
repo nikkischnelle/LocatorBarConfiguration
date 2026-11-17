@@ -1,7 +1,7 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
-    "config:best-practices",
+    'config:best-practices',
     ':reviewer(nikkischnelle)',
   ],
   separateMajorMinor: true,
@@ -9,5 +9,7 @@
   separateMultipleMajor: true,
   prHourlyLimit: 5,
   prConcurrentLimit: 5,
-  dependencyDashboardAutoclose: true,
+  dependencyDashboard: {
+    autoclose: true,
+  },
 }
